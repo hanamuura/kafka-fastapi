@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from dataclasses import dataclass
+from typing import Literal
 
 
 env = load_dotenv()
@@ -9,6 +10,9 @@ env = load_dotenv()
 class KafkaConfig:
     host: str
     max_timeout: int
+    schema_url: str
+    include_in_schema: bool
+    acks: Literal[0, 1, -1, "all"]
 
 @dataclass
 class AppConfig:
@@ -21,7 +25,10 @@ assert kafka_host
 
 kafka_config = KafkaConfig(
     host=kafka_host,
-    max_timeout=400
+    max_timeout=400,
+    schema_url="/kafka",
+    include_in_schema=True,
+    acks="all"
 )
 
 
